@@ -9,28 +9,20 @@ def get_directory():
     
     choice = input("> ")
     
+    #print(os.path.Path(choiceP))
     return choice
     
 def get_extension(lst):
     ''' Check if extension is None or not, append ones that aren't to list and return'''
-    
-    def get_name(f):
-        ''' Removes path and returns just name + extension '''
-        
-        return os.path.basename(f)
 
     item_list = []
 
     for item in lst:
     
-        i = os.path.splitext(get_name(item))[1]
+        i = os.path.splitext(os.path.basename(item))[1]
     
         # If extension is blank
-        if i == '':
-            
-            pass
-        else:
-            item_list.append(item)
+        if i != '': item_list.append(item)
     
     return item_list
 
@@ -39,15 +31,10 @@ def folder_control(var, directory):
     
     # Path is directory and the 2nd item in the tuple os.path.splitext(var) which is the extension
     path = f"{directory}\\{os.path.splitext(var)[1]}"
-    # print(path)
     check = os.path.exists(path)
         
-    if check == True:
-        # Do nothing
-        pass
-    
-    else:
-        print(f'Folder for {os.path.splitext(var)[1]} oes not exist, creating....')
+    if not check:
+        print(f'Folder for {os.path.splitext(var)[1]} does not exist, creating....')
         
         try:
             os.mkdir(path)
